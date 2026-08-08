@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: 'Mernache Meubles | Mobilier & savoir-faire depuis 1993',
   description: 'Mernache Meubles, maison de mobilier et de savoir-faire à Bejaïa, Algérie. Collections, mobilier sur mesure et showroom depuis 1993.',
   generator: 'v0.app',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export const viewport: Viewport = {
