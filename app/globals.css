@@ -606,15 +606,15 @@ img, svg { max-width: 100%; }
 
   .instagram-section { gap: 36px; }
   .instagram-section .button { max-width: 100%; }
-  .contact { gap: 54px; }
+  .contact { display: flex; flex-direction: column; gap: 54px; }
   .contact-form { gap: 24px; grid-template-columns: 1fr; }
   .contact-form .full { grid-column: auto; }
   .contact-form .button { max-width: 100%; }
   .hours { gap: 48px; }
 
   .footer { padding: 76px 6vw 24px; }
-  .footer-top { gap: 44px 8vw; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .footer-brand { grid-column: 1 / -1; }
+  .footer-top { display: flex; flex-direction: column; gap: 44px; }
+  .footer-brand { grid-column: auto; }
   .footer-bottom { align-items: flex-start; flex-direction: column; margin-top: 60px; }
 }
 
