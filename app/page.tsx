@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion, type Variants } from 'framer-motion'
-import { ArrowDownRight, ArrowLeft, ArrowRight, Camera, MapPin, Menu, Search, X } from 'lucide-react'
+import { ArrowDownRight, ArrowLeft, ArrowRight, Camera, MapPin, Search, X } from 'lucide-react'
 
 const images = {
   hero: '/hero.webp',
@@ -93,11 +93,41 @@ export default function Page() {
   const changeStory = (direction: number) => setStory((current) => (current + direction + storyItems.length) % storyItems.length)
 
   return <main>
-    <header className={`site-header ${scrolled ? 'site-header--scrolled' : ''}`}>
-      <a href="#top" aria-label="Mernache Meubles, accueil"><BrandLogo inverse={!scrolled} /></a>
+    <header className={`site-header ${scrolled || menuOpen ? 'site-header--scrolled' : ''}`}>
+      <a href="#top" aria-label="Mernache Meubles, accueil"><BrandLogo inverse={!scrolled && !menuOpen} /></a>
       <nav className="desktop-nav" aria-label="Navigation principale"><a href="#collections">Collections</a><a href="#savoir-faire">Savoir-faire</a><a href="#histoire">À propos</a><a href="#journal">Journal</a></nav>
-      <div className="header-actions"><button className="icon-button" onClick={() => setSearchOpen(true)} aria-label="Rechercher"><Search size={17} /></button><a className="header-instagram" href="https://instagram.com/mernache_meubles" target="_blank" rel="noreferrer"><Camera size={16} /> Instagram</a><a className="header-contact" href="#contact">Contact</a><button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}>{menuOpen ? <X size={21} /> : <Menu size={21} />}</button></div>
-      {menuOpen && <div className="mobile-menu"><a href="#collections" onClick={() => setMenuOpen(false)}>Collections</a><a href="#savoir-faire" onClick={() => setMenuOpen(false)}>Savoir-faire</a><a href="#histoire" onClick={() => setMenuOpen(false)}>À propos</a><a href="#journal" onClick={() => setMenuOpen(false)}>Journal</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></div>}
+      <div className="header-actions"><button className="icon-button" onClick={() => setSearchOpen(true)} aria-label="Rechercher"><Search size={17} /></button><a className="header-instagram" href="https://instagram.com/mernache_meubles" target="_blank" rel="noreferrer"><Camera size={16} /> Instagram</a><a className="header-contact" href="#contact">Contact</a>
+        <button className={`menu-button hamburger ${menuOpen ? 'hamburger--open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={menuOpen}>
+          <span className="hamburger-bar" />
+          <span className="hamburger-bar" />
+          <span className="hamburger-bar" />
+        </button>
+      </div>
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="mobile-menu"
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -18 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -18 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {(['#collections', '#savoir-faire', '#histoire', '#journal', '#contact'] as const).map((href, i) => (
+              <motion.a
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                initial={{ opacity: 0, x: -18 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.28, delay: i * 0.055, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {['Collections', 'Savoir-faire', 'À propos', 'Journal', 'Contact'][i]}
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
 
     {searchOpen && <div className="search-overlay" role="dialog" aria-modal="true" aria-label="Recherche"><button onClick={() => setSearchOpen(false)} aria-label="Fermer"><X size={26} /></button><h2 className="search-title">Rechercher dans l’univers Mernache</h2><label htmlFor="search">Que recherchez-vous ?</label><div className="search-field"><input id="search" autoFocus placeholder="Salon, chambre, rangement…" /><ArrowRight size={22} /></div></div>}
