@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useReducedMotion, type Variants } from 'framer
 import { ArrowDownRight, ArrowLeft, ArrowRight, Camera, MapPin, Menu, Search, X } from 'lucide-react'
 
 const images = {
-  hero: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2200&q=85',
+  hero: '/hero.webp',
   intro: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85',
   wood: 'https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=1200&q=85',
   salon: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=1400&q=85',
